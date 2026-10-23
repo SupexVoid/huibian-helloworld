@@ -1,0 +1,57 @@
+Module: sumdata.asm
+GROUP: 'DGROUP' _DATA,STACK
+
+Segment: _TEXT WORD USE16 00000044 bytes
+0000  B8 00 00				mov		ax,DGROUP
+0003  8E D8				mov		ds,ax
+0005  B9 64 00				mov		cx,0x0064
+0008				L$1:
+0008  01 0E 00 00			add		DGROUP:L$4,cx
+000C  E2 FA				loop		L$1
+000E  A1 00 00				mov		ax,DGROUP:L$4
+0011  E8 0D 00				call		print_uint
+0014  8D 16 02 00			lea		dx,DGROUP:L$5
+0018  B4 09				mov		ah,0x09
+001A  CD 21				int		0x21
+001C  B8 00 4C				mov		ax,0x4c00
+001F  CD 21				int		0x21
+0021				print_uint:
+0021  50				push		ax
+0022  53				push		bx
+0023  51				push		cx
+0024  52				push		dx
+0025  33 C9				xor		cx,cx
+0027  BB 0A 00				mov		bx,0x000a
+002A				L$2:
+002A  33 D2				xor		dx,dx
+002C  F7 F3				div		bx
+002E  52				push		dx
+002F  41				inc		cx
+0030  83 F8 00				cmp		ax,0x0000
+0033  75 F5				jne		L$2
+0035				L$3:
+0035  5A				pop		dx
+0036  80 C2 30				add		dl,0x30
+0039  B4 02				mov		ah,0x02
+003B  CD 21				int		0x21
+003D  E2 F6				loop		L$3
+003F  5A				pop		dx
+0040  59				pop		cx
+0041  5B				pop		bx
+0042  58				pop		ax
+0043  C3				ret
+
+Routine Size: 68 bytes,    Routine Base: _TEXT + 0000
+
+No disassembly errors
+
+Segment: _DATA WORD USE16 00000005 bytes
+0000				L$4:
+0000  00 00                                           ..
+0002				L$5:
+0002  0D 0A 24                                        ..$
+
+Segment: STACK PARA USE16 00000100 bytes
+
+BSS Size: 256 bytes
+

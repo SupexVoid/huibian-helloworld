@@ -1,0 +1,12 @@
+n HELLOE.COM
+e 0100 0e 1f ba 0e 01 b4 09 cd 21 b8 00 4c cd 21
+e 010e 48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21 0d 0a 24
+u 0100 010d
+d 010e 011d
+r bx
+0000
+r cx
+001e
+w
+g=0100
+q

@@ -1,0 +1,88 @@
+Module: ascii.c
+GROUP: 'DGROUP' CONST,CONST2,_DATA
+
+Segment: _TEXT BYTE USE16 00000082 bytes
+0000				main_:
+0000  B8 1A 00				mov		ax,0x001a
+0003  E8 00 00				call		__STK
+0006  53				push		bx
+0007  51				push		cx
+0008  52				push		dx
+0009  56				push		si
+000A  57				push		di
+000B  55				push		bp
+000C  89 E5				mov		bp,sp
+000E  81 EC 08 00			sub		sp,0x0008
+0012				L$1:
+0012  C7 46 FE 61 00			mov		word ptr -0x2[bp],0x0061
+0017  C7 46 FA 00 00			mov		word ptr -0x6[bp],0x0000
+001C  E9 00 00				jmp		L$2
+001F				L$2:
+001F  83 7E FA 02			cmp		word ptr -0x6[bp],0x0002
+0023  7C 03				jl		L$3
+0025  E9 49 00				jmp		L$11
+0028				L$3:
+0028  C7 46 FC 00 00			mov		word ptr -0x4[bp],0x0000
+002D				L$4:
+002D  83 7E FC 0D			cmp		word ptr -0x4[bp],0x000d
+0031  7C 03				jl		L$5
+0033  E9 2C 00				jmp		L$9
+0036				L$5:
+0036  8B 46 FE				mov		ax,-0x2[bp]
+0039  50				push		ax
+003A  B8 00 00				mov		ax,offset DGROUP:L$14
+003D  50				push		ax
+003E  E8 00 00				call		printf_
+0041  83 C4 04				add		sp,0x0004
+0044  FF 46 FE				inc		word ptr -0x2[bp]
+0047  83 7E FC 0C			cmp		word ptr -0x4[bp],0x000c
+004B  7D 03				jge		L$6
+004D  E9 03 00				jmp		L$7
+0050				L$6:
+0050  E9 0A 00				jmp		L$8
+0053				L$7:
+0053  B8 03 00				mov		ax,offset DGROUP:L$15
+0056  50				push		ax
+0057  E8 00 00				call		printf_
+005A  83 C4 02				add		sp,0x0002
+005D				L$8:
+005D  FF 46 FC				inc		word ptr -0x4[bp]
+0060  EB CB				jmp		L$4
+0062				L$9:
+0062  B8 05 00				mov		ax,offset DGROUP:L$16
+0065  50				push		ax
+0066  E8 00 00				call		printf_
+0069  83 C4 02				add		sp,0x0002
+006C				L$10:
+006C  FF 46 FA				inc		word ptr -0x6[bp]
+006F  EB AE				jmp		L$2
+0071				L$11:
+0071  C7 46 F8 00 00			mov		word ptr -0x8[bp],0x0000
+0076  8B 46 F8				mov		ax,-0x8[bp]
+0079				L$12:
+0079  89 EC				mov		sp,bp
+007B  5D				pop		bp
+007C  5F				pop		di
+007D  5E				pop		si
+007E  5A				pop		dx
+007F  59				pop		cx
+0080  5B				pop		bx
+0081  C3				ret
+0082				L$13:
+
+Routine Size: 130 bytes,    Routine Base: _TEXT + 0000
+
+No disassembly errors
+
+Segment: CONST WORD USE16 00000007 bytes
+0000				L$14:
+0000  25 63 00                                        %c.
+0003				L$15:
+0003  20 00                                            .
+0005				L$16:
+0005  0A 00                                           ..
+
+Segment: CONST2 WORD USE16 00000000 bytes
+
+Segment: _DATA WORD USE16 00000000 bytes
+

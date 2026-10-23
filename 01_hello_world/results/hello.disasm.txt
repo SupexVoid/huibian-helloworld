@@ -1,0 +1,25 @@
+Module: hello.asm
+GROUP: 'DGROUP' _DATA,STACK
+
+Segment: _TEXT WORD USE16 00000011 bytes
+0000				main:
+0000  B8 00 00				mov		ax,DGROUP
+0003  8E D8				mov		ds,ax
+0005  BA 00 00				mov		dx,offset DGROUP:L$1
+0008  B4 09				mov		ah,0x09
+000A  CD 21				int		0x21
+000C  B8 00 4C				mov		ax,0x4c00
+000F  CD 21				int		0x21
+
+Routine Size: 17 bytes,    Routine Base: _TEXT + 0000
+
+No disassembly errors
+
+Segment: _DATA WORD USE16 00000010 bytes
+0000				L$1:
+0000  48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0D 0A 24 Hello, World!..$
+
+Segment: STACK PARA USE16 00000100 bytes
+
+BSS Size: 256 bytes
+

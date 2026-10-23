@@ -1,0 +1,12 @@
+test_all_one_hundred_input_values (__main__.AssignmentOutputTests.test_all_one_hundred_input_values) ... ok
+test_ascii_loop_and_conditional_and_c (__main__.AssignmentOutputTests.test_ascii_loop_and_conditional_and_c) ... ok
+test_debug_entered_com (__main__.AssignmentOutputTests.test_debug_entered_com) ... ok
+test_hello_exe (__main__.AssignmentOutputTests.test_hello_exe) ... ok
+test_invalid_input_retries_without_overflow (__main__.AssignmentOutputTests.test_invalid_input_retries_without_overflow) ... ok
+test_multiplication_assembly_and_c (__main__.AssignmentOutputTests.test_multiplication_assembly_and_c) ... ok
+test_sum_storage_variants_and_c (__main__.AssignmentOutputTests.test_sum_storage_variants_and_c) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.014s
+
+OK

@@ -1,0 +1,179 @@
+date       time         | 
+2026-10-23 21:26:45.829 | arguments: $DOSBOX --noprimaryconf --nolocalconf --set output=texture --set core=normal --set cpu_cycles=max $REPO\\.run\\20261023-212645-5bdee0\\run.bat
+2026-10-23 21:26:45.830 | Current dir: $REPO\.run\20261023-212645-5bdee0
+2026-10-23 21:26:45.830 | stderr verbosity: 0
+2026-10-23 21:26:45.830 | -----------------------------------
+2026-10-23 21:26:45.830 | dosbox-staging version 0.83.0 (7b400)
+2026-10-23 21:26:45.830 | ---
+2026-10-23 21:26:45.830 | Loguru version 2.1.0 initialised
+2026-10-23 21:26:45.837 | LOCALE: Using internal English language messages (detected from 'zh-Hans-CN, en-US; GUI: zh-CN')
+2026-10-23 21:26:45.837 | SDL: Version 2.32.10 initialised
+2026-10-23 21:26:45.837 | SDL: dummy video initialised
+2026-10-23 21:26:45.837 | VIDEO: Using the DOS video modes' refresh rate
+2026-10-23 21:26:45.837 | DOS: Setting hard disk disk speed to maximum
+2026-10-23 21:26:45.837 | DOS: Setting floppy disk speed to maximum
+2026-10-23 21:26:45.842 | MEMORY: Using 4096 DOS memory pages (16 MB) at address: 0000019AB0D17060
+2026-10-23 21:26:45.842 | CPU: Invalid 'cpu_cycles_protected' setting: '60000'; fixed values are not allowed if 'cpu_cycles' is 'max', using 'auto'
+2026-10-23 21:26:45.842 | CPU: Switched to max cycles. Try setting a fixed cycles value if you're getting audio drop-outs or the programs runs too fast.
+2026-10-23 21:26:45.842 | VIDEO: Initialised S3 Trio64 VESA 2.0 compatible with 4 MB of FP DRAM supporting 89 modes
+2026-10-23 21:26:45.845 | VOODOO: Initialized with 4 MB of RAM, 16 threads, and bilinear filtering
+2026-10-23 21:26:45.845 | CAPTURE: Image capturer started
+2026-10-23 21:26:45.845 | SDL: dummy audio initialised
+2026-10-23 21:26:45.845 | MIXER: Initialised stereo 48000 Hz audio with 1024 sample frame buffer
+2026-10-23 21:26:45.845 | MIXER: Reverb disabled
+2026-10-23 21:26:45.845 | MIXER: Master compressor enabled
+2026-10-23 21:26:45.845 | MPU-401: Running in intelligent mode on ports 330h and 331h
+2026-10-23 21:26:45.974 | MIDI: Opened device 'win32'
+2026-10-23 21:26:45.974 | OPL: Operating at 49716 Hz and downsampling to the output rate
+2026-10-23 21:26:45.974 | OPL: Noise gate enabled
+2026-10-23 21:26:45.974 | OPL: Running OPL3 on ports 220h and 388h
+2026-10-23 21:26:45.974 | OPL: Sound Blaster 16 OPL output filter enabled
+2026-10-23 21:26:45.974 | DMA: Initialised primary controller
+2026-10-23 21:26:45.974 | DMA: Initialised secondary controller
+2026-10-23 21:26:45.974 | SB: Operating at 22050 Hz and upsampling to the output rate
+2026-10-23 21:26:45.974 | SB16: Modern DAC output filter enabled
+2026-10-23 21:26:45.974 | SB16: Setting 'BLASTER' environment variable to 'A220 I7 D1 H5 T6'
+2026-10-23 21:26:45.974 | SB16: Running on port 220h, IRQ 7, DMA 1, and high DMA 5
+2026-10-23 21:26:45.975 | PCSPEAKER: Operating at 32000 Hz and upsampling to the output rate
+2026-10-23 21:26:45.975 | PCSPEAKER: Initialised impulse model
+2026-10-23 21:26:45.975 | PCSPEAKER: High-pass filter enabled (18 dB/oct at 120 Hz)
+2026-10-23 21:26:45.975 | PCSPEAKER: Low-pass filter enabled (18 dB/oct at 4300 Hz)
+2026-10-23 21:26:45.983 | LOCALE: Country detected from 'zh-CN'
+2026-10-23 21:26:45.983 | LOCALE: Loading native locale for country 86 - 'China'
+2026-10-23 21:26:45.983 | LOCALE: Using numeric/time/date format detected from host OS
+2026-10-23 21:26:45.983 | LOCALE: Keyboard layout and code page detected from '00000804;00000409'
+2026-10-23 21:26:45.984 | LOCALE: Loaded keyboard layout 'us' - 'US (standard, QWERTY/national)'
+2026-10-23 21:26:45.986 | CONFIG: Loaded auto-mounted drive config file '$DOSBOX_DIR\resources\drives\y.conf'
+2026-10-23 21:26:45.987 | DISPLAY: Using 758x569 window size in windowed mode on display-0
+2026-10-23 21:26:45.987 | SDL: Using 'software' SDL render driver
+2026-10-23 21:26:45.987 | VGA: Double scanning VGA video modes enabled
+2026-10-23 21:26:45.987 | VGA: Pixel doubling enabled
+2026-10-23 21:26:45.987 | RENDER: Auto-switched to P22 CRT color profile
+2026-10-23 21:26:45.987 | RENDER: Auto-switched to 7800K colour temperature
+2026-10-23 21:26:45.987 | MOUSE: Will be captured after the first left or right button click
+2026-10-23 21:26:45.987 | MOUSE: Middle button will capture/release the mouse (clicks not sent to the game/program)
+2026-10-23 21:26:45.987 | RENDER: Deinterlacing disabled
+2026-10-23 21:26:45.987 | RENDER: Dedithering disabled
+2026-10-23 21:26:46.234 | MAPPER: No joysticks found
+2026-10-23 21:26:46.235 | MAPPER: Loaded default key bindings
+2026-10-23 21:26:46.236 | MOUSE (DOS): Built-in driver is simulating a 2 buttons model
+2026-10-23 21:26:46.244 | RENDER: Auto-switched to P22 CRT color profile
+2026-10-23 21:26:46.244 | RENDER: Auto-switched to 7800K colour temperature
+2026-10-23 21:26:46.245 | DISPLAY: VGA 720x400 16-colour text mode 03h at 70.087 Hz, scaled to 758x569 pixels with 1:1.35 (20:27) pixel aspect ratio
+2026-10-23 21:26:46.245 | DISPLAY: Presenting at DOS rate without vsync
+2026-10-23 21:26:46.258 | SHELL: Redirect input from n001.in
+2026-10-23 21:26:46.260 | SHELL: Redirect input from n002.in
+2026-10-23 21:26:46.261 | SHELL: Redirect input from n003.in
+2026-10-23 21:26:46.263 | SHELL: Redirect input from n004.in
+2026-10-23 21:26:46.264 | SHELL: Redirect input from n005.in
+2026-10-23 21:26:46.265 | SHELL: Redirect input from n006.in
+2026-10-23 21:26:46.268 | SHELL: Redirect input from n007.in
+2026-10-23 21:26:46.269 | SHELL: Redirect input from n008.in
+2026-10-23 21:26:46.270 | SHELL: Redirect input from n009.in
+2026-10-23 21:26:46.272 | SHELL: Redirect input from n010.in
+2026-10-23 21:26:46.273 | SHELL: Redirect input from n011.in
+2026-10-23 21:26:46.274 | SHELL: Redirect input from n012.in
+2026-10-23 21:26:46.275 | SHELL: Redirect input from n013.in
+2026-10-23 21:26:46.277 | SHELL: Redirect input from n014.in
+2026-10-23 21:26:46.278 | SHELL: Redirect input from n015.in
+2026-10-23 21:26:46.280 | SHELL: Redirect input from n016.in
+2026-10-23 21:26:46.281 | SHELL: Redirect input from n017.in
+2026-10-23 21:26:46.282 | SHELL: Redirect input from n018.in
+2026-10-23 21:26:46.283 | SHELL: Redirect input from n019.in
+2026-10-23 21:26:46.285 | SHELL: Redirect input from n020.in
+2026-10-23 21:26:46.286 | SHELL: Redirect input from n021.in
+2026-10-23 21:26:46.287 | SHELL: Redirect input from n022.in
+2026-10-23 21:26:46.289 | SHELL: Redirect input from n023.in
+2026-10-23 21:26:46.290 | SHELL: Redirect input from n024.in
+2026-10-23 21:26:46.291 | SHELL: Redirect input from n025.in
+2026-10-23 21:26:46.293 | SHELL: Redirect input from n026.in
+2026-10-23 21:26:46.294 | SHELL: Redirect input from n027.in
+2026-10-23 21:26:46.295 | SHELL: Redirect input from n028.in
+2026-10-23 21:26:46.297 | SHELL: Redirect input from n029.in
+2026-10-23 21:26:46.298 | SHELL: Redirect input from n030.in
+2026-10-23 21:26:46.299 | SHELL: Redirect input from n031.in
+2026-10-23 21:26:46.301 | SHELL: Redirect input from n032.in
+2026-10-23 21:26:46.302 | SHELL: Redirect input from n033.in
+2026-10-23 21:26:46.304 | SHELL: Redirect input from n034.in
+2026-10-23 21:26:46.306 | SHELL: Redirect input from n035.in
+2026-10-23 21:26:46.307 | SHELL: Redirect input from n036.in
+2026-10-23 21:26:46.309 | SHELL: Redirect input from n037.in
+2026-10-23 21:26:46.310 | SHELL: Redirect input from n038.in
+2026-10-23 21:26:46.311 | SHELL: Redirect input from n039.in
+2026-10-23 21:26:46.313 | SHELL: Redirect input from n040.in
+2026-10-23 21:26:46.314 | SHELL: Redirect input from n041.in
+2026-10-23 21:26:46.315 | SHELL: Redirect input from n042.in
+2026-10-23 21:26:46.317 | SHELL: Redirect input from n043.in
+2026-10-23 21:26:46.318 | SHELL: Redirect input from n044.in
+2026-10-23 21:26:46.319 | SHELL: Redirect input from n045.in
+2026-10-23 21:26:46.320 | SHELL: Redirect input from n046.in
+2026-10-23 21:26:46.322 | SHELL: Redirect input from n047.in
+2026-10-23 21:26:46.323 | SHELL: Redirect input from n048.in
+2026-10-23 21:26:46.324 | SHELL: Redirect input from n049.in
+2026-10-23 21:26:46.325 | SHELL: Redirect input from n050.in
+2026-10-23 21:26:46.328 | SHELL: Redirect input from n051.in
+2026-10-23 21:26:46.330 | SHELL: Redirect input from n052.in
+2026-10-23 21:26:46.331 | SHELL: Redirect input from n053.in
+2026-10-23 21:26:46.332 | SHELL: Redirect input from n054.in
+2026-10-23 21:26:46.334 | SHELL: Redirect input from n055.in
+2026-10-23 21:26:46.336 | SHELL: Redirect input from n056.in
+2026-10-23 21:26:46.337 | SHELL: Redirect input from n057.in
+2026-10-23 21:26:46.338 | SHELL: Redirect input from n058.in
+2026-10-23 21:26:46.339 | SHELL: Redirect input from n059.in
+2026-10-23 21:26:46.341 | SHELL: Redirect input from n060.in
+2026-10-23 21:26:46.342 | SHELL: Redirect input from n061.in
+2026-10-23 21:26:46.343 | SHELL: Redirect input from n062.in
+2026-10-23 21:26:46.345 | SHELL: Redirect input from n063.in
+2026-10-23 21:26:46.346 | SHELL: Redirect input from n064.in
+2026-10-23 21:26:46.347 | SHELL: Redirect input from n065.in
+2026-10-23 21:26:46.348 | SHELL: Redirect input from n066.in
+2026-10-23 21:26:46.351 | SHELL: Redirect input from n067.in
+2026-10-23 21:26:46.352 | SHELL: Redirect input from n068.in
+2026-10-23 21:26:46.354 | SHELL: Redirect input from n069.in
+2026-10-23 21:26:46.355 | SHELL: Redirect input from n070.in
+2026-10-23 21:26:46.356 | SHELL: Redirect input from n071.in
+2026-10-23 21:26:46.358 | SHELL: Redirect input from n072.in
+2026-10-23 21:26:46.359 | SHELL: Redirect input from n073.in
+2026-10-23 21:26:46.360 | SHELL: Redirect input from n074.in
+2026-10-23 21:26:46.362 | SHELL: Redirect input from n075.in
+2026-10-23 21:26:46.363 | SHELL: Redirect input from n076.in
+2026-10-23 21:26:46.364 | SHELL: Redirect input from n077.in
+2026-10-23 21:26:46.365 | SHELL: Redirect input from n078.in
+2026-10-23 21:26:46.367 | SHELL: Redirect input from n079.in
+2026-10-23 21:26:46.368 | SHELL: Redirect input from n080.in
+2026-10-23 21:26:46.369 | SHELL: Redirect input from n081.in
+2026-10-23 21:26:46.371 | SHELL: Redirect input from n082.in
+2026-10-23 21:26:46.372 | SHELL: Redirect input from n083.in
+2026-10-23 21:26:46.374 | SHELL: Redirect input from n084.in
+2026-10-23 21:26:46.375 | SHELL: Redirect input from n085.in
+2026-10-23 21:26:46.377 | SHELL: Redirect input from n086.in
+2026-10-23 21:26:46.378 | SHELL: Redirect input from n087.in
+2026-10-23 21:26:46.380 | SHELL: Redirect input from n088.in
+2026-10-23 21:26:46.381 | SHELL: Redirect input from n089.in
+2026-10-23 21:26:46.383 | SHELL: Redirect input from n090.in
+2026-10-23 21:26:46.384 | SHELL: Redirect input from n091.in
+2026-10-23 21:26:46.385 | SHELL: Redirect input from n092.in
+2026-10-23 21:26:46.387 | SHELL: Redirect input from n093.in
+2026-10-23 21:26:46.388 | SHELL: Redirect input from n094.in
+2026-10-23 21:26:46.390 | SHELL: Redirect input from n095.in
+2026-10-23 21:26:46.391 | SHELL: Redirect input from n096.in
+2026-10-23 21:26:46.393 | SHELL: Redirect input from n097.in
+2026-10-23 21:26:46.394 | SHELL: Redirect input from n098.in
+2026-10-23 21:26:46.396 | SHELL: Redirect input from n099.in
+2026-10-23 21:26:46.397 | SHELL: Redirect input from n100.in
+2026-10-23 21:26:46.399 | SHELL: Redirect input from bad0.in
+2026-10-23 21:26:46.400 | SHELL: Redirect input from bad1.in
+2026-10-23 21:26:46.402 | SHELL: Redirect input from bad2.in
+2026-10-23 21:26:46.404 | SHELL: Redirect input from bad3.in
+2026-10-23 21:26:46.406 | SHELL: Redirect input from bad4.in
+2026-10-23 21:26:46.407 | SHELL: Redirect input from bad5.in
+2026-10-23 21:26:46.409 | SHELL: Redirect input from bad6.in
+2026-10-23 21:26:46.411 | SHELL: Redirect input from bad7.in
+2026-10-23 21:26:46.414 | PCSPEAKER: Shutting down impulse model
+2026-10-23 21:26:46.414 | OPL: Shutting down OPL3
+2026-10-23 21:26:46.414 | SB16: Shutting down
+2026-10-23 21:26:46.519 | MPU-401: Shutting down
+2026-10-23 21:26:46.579 | CAPTURE: Image capturer shutting down
+2026-10-23 21:26:46.580 | DMA: Shutting down primary controller
+2026-10-23 21:26:46.580 | DMA: Shutting down secondary controller
+2026-10-23 21:26:46.582 | atexit

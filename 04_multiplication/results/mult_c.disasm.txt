@@ -1,0 +1,102 @@
+Module: mult.c
+GROUP: 'DGROUP' CONST,CONST2,_DATA
+
+Segment: _TEXT BYTE USE16 0000009A bytes
+0000				main_:
+0000  B8 1E 00				mov		ax,0x001e
+0003  E8 00 00				call		__STK
+0006  53				push		bx
+0007  51				push		cx
+0008  52				push		dx
+0009  56				push		si
+000A  57				push		di
+000B  55				push		bp
+000C  89 E5				mov		bp,sp
+000E  81 EC 08 00			sub		sp,0x0008
+0012				L$1:
+0012  B8 00 00				mov		ax,offset DGROUP:L$14
+0015  50				push		ax
+0016  E8 00 00				call		printf_
+0019  83 C4 02				add		sp,0x0002
+001C  C7 46 FA 09 00			mov		word ptr -0x6[bp],0x0009
+0021  E9 00 00				jmp		L$2
+0024				L$2:
+0024  83 7E FA 00			cmp		word ptr -0x6[bp],0x0000
+0028  75 03				jne		L$3
+002A  E9 5C 00				jmp		L$11
+002D				L$3:
+002D  C7 46 FC 01 00			mov		word ptr -0x4[bp],0x0001
+0032				L$4:
+0032  8B 46 FC				mov		ax,-0x4[bp]
+0035  3B 46 FA				cmp		ax,-0x6[bp]
+0038  76 03				jbe		L$5
+003A  E9 3C 00				jmp		L$9
+003D				L$5:
+003D  8B 46 FA				mov		ax,-0x6[bp]
+0040  F7 66 FC				mul		word ptr -0x4[bp]
+0043  89 46 FE				mov		-0x2[bp],ax
+0046  8B 46 FE				mov		ax,-0x2[bp]
+0049  50				push		ax
+004A  8B 46 FC				mov		ax,-0x4[bp]
+004D  50				push		ax
+004E  8B 46 FA				mov		ax,-0x6[bp]
+0051  50				push		ax
+0052  B8 12 00				mov		ax,offset DGROUP:L$15
+0055  50				push		ax
+0056  E8 00 00				call		printf_
+0059  83 C4 08				add		sp,0x0008
+005C  8B 46 FC				mov		ax,-0x4[bp]
+005F  3B 46 FA				cmp		ax,-0x6[bp]
+0062  74 03				je		L$6
+0064  E9 03 00				jmp		L$7
+0067				L$6:
+0067  E9 0A 00				jmp		L$8
+006A				L$7:
+006A  B8 1B 00				mov		ax,offset DGROUP:L$16
+006D  50				push		ax
+006E  E8 00 00				call		printf_
+0071  83 C4 02				add		sp,0x0002
+0074				L$8:
+0074  FF 46 FC				inc		word ptr -0x4[bp]
+0077  EB B9				jmp		L$4
+0079				L$9:
+0079  B8 1E 00				mov		ax,offset DGROUP:L$17
+007C  50				push		ax
+007D  E8 00 00				call		printf_
+0080  83 C4 02				add		sp,0x0002
+0083				L$10:
+0083  83 46 FA FF			add		word ptr -0x6[bp],0xffff
+0087  EB 9B				jmp		L$2
+0089				L$11:
+0089  C7 46 F8 00 00			mov		word ptr -0x8[bp],0x0000
+008E  8B 46 F8				mov		ax,-0x8[bp]
+0091				L$12:
+0091  89 EC				mov		sp,bp
+0093  5D				pop		bp
+0094  5F				pop		di
+0095  5E				pop		si
+0096  5A				pop		dx
+0097  59				pop		cx
+0098  5B				pop		bx
+0099  C3				ret
+009A				L$13:
+
+Routine Size: 154 bytes,    Routine Base: _TEXT + 0000
+
+No disassembly errors
+
+Segment: CONST WORD USE16 00000020 bytes
+0000				L$14:
+0000  54 68 65 20 39 6D 75 6C 39 20 74 61 62 6C 65 3A The 9mul9 table:
+0010  0A 00                                           ..
+0012				L$15:
+0012  25 75 2A 25 75 3D 25 75 00                      %u*%u=%u.
+001B				L$16:
+001B  20 20 00                                          .
+001E				L$17:
+001E  0A 00                                           ..
+
+Segment: CONST2 WORD USE16 00000000 bytes
+
+Segment: _DATA WORD USE16 00000000 bytes
+

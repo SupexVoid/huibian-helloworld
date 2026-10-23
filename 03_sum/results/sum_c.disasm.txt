@@ -1,0 +1,93 @@
+Module: sum.c
+GROUP: 'DGROUP' CONST,CONST2,_DATA
+
+Segment: _TEXT BYTE USE16 00000080 bytes
+0000				sum_to_:
+0000  50				push		ax
+0001  B8 16 00				mov		ax,0x0016
+0004  E8 00 00				call		__STK
+0007  58				pop		ax
+0008  53				push		bx
+0009  51				push		cx
+000A  52				push		dx
+000B  56				push		si
+000C  57				push		di
+000D  55				push		bp
+000E  89 E5				mov		bp,sp
+0010  81 EC 08 00			sub		sp,0x0008
+0014				L$1:
+0014  89 46 F8				mov		-0x8[bp],ax
+0017  C7 46 FE 00 00			mov		word ptr -0x2[bp],0x0000
+001C  C7 46 FC 01 00			mov		word ptr -0x4[bp],0x0001
+0021  E9 00 00				jmp		L$2
+0024				L$2:
+0024  8B 46 FC				mov		ax,-0x4[bp]
+0027  3B 46 F8				cmp		ax,-0x8[bp]
+002A  76 03				jbe		L$3
+002C  E9 0B 00				jmp		L$5
+002F				L$3:
+002F  8B 46 FC				mov		ax,-0x4[bp]
+0032  01 46 FE				add		-0x2[bp],ax
+0035				L$4:
+0035  FF 46 FC				inc		word ptr -0x4[bp]
+0038  EB EA				jmp		L$2
+003A				L$5:
+003A  8B 46 FE				mov		ax,-0x2[bp]
+003D  89 46 FA				mov		-0x6[bp],ax
+0040  8B 46 FA				mov		ax,-0x6[bp]
+0043				L$6:
+0043  89 EC				mov		sp,bp
+0045  5D				pop		bp
+0046  5F				pop		di
+0047  5E				pop		si
+0048  5A				pop		dx
+0049  59				pop		cx
+004A  5B				pop		bx
+004B  C3				ret
+
+Routine Size: 76 bytes,    Routine Base: _TEXT + 0000
+
+004C				main_:
+004C  B8 14 00				mov		ax,0x0014
+004F  E8 00 00				call		__STK
+0052  53				push		bx
+0053  51				push		cx
+0054  52				push		dx
+0055  56				push		si
+0056  57				push		di
+0057  55				push		bp
+0058  89 E5				mov		bp,sp
+005A  81 EC 02 00			sub		sp,0x0002
+005E				L$7:
+005E  B8 64 00				mov		ax,0x0064
+0061  E8 00 00				call		sum_to_
+0064  50				push		ax
+0065  B8 00 00				mov		ax,offset DGROUP:L$10
+0068  50				push		ax
+0069  E8 00 00				call		printf_
+006C  83 C4 04				add		sp,0x0004
+006F  C7 46 FE 00 00			mov		word ptr -0x2[bp],0x0000
+0074  8B 46 FE				mov		ax,-0x2[bp]
+0077				L$8:
+0077  89 EC				mov		sp,bp
+0079  5D				pop		bp
+007A  5F				pop		di
+007B  5E				pop		si
+007C  5A				pop		dx
+007D  59				pop		cx
+007E  5B				pop		bx
+007F  C3				ret
+0080				L$9:
+
+Routine Size: 52 bytes,    Routine Base: _TEXT + 004C
+
+No disassembly errors
+
+Segment: CONST WORD USE16 00000004 bytes
+0000				L$10:
+0000  25 75 0A 00                                     %u..
+
+Segment: CONST2 WORD USE16 00000000 bytes
+
+Segment: _DATA WORD USE16 00000000 bytes
+

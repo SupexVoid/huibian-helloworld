@@ -1,0 +1,71 @@
+$ $WATCOM\binnt64\wasm.exe -q -0 -fo=..\.build\hello.obj hello.asm
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/hello.exe file ..\.build\hello.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/hello.disasm.txt ..\.build\hello.obj
+
+$ $WATCOM\binnt64\wasm.exe -q -0 -fo=..\.build\ascjump.obj ascjump.asm
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/ascjump.exe file ..\.build\ascjump.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/ascjump.disasm.txt ..\.build\ascjump.obj
+
+$ $WATCOM\binnt64\wasm.exe -q -0 -fo=..\.build\ascloop.obj ascloop.asm
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/ascloop.exe file ..\.build\ascloop.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/ascloop.disasm.txt ..\.build\ascloop.obj
+
+$ $WATCOM\binnt64\wcc.exe -q -0 -ms -od -d2 -bt=dos -fo=..\.build\ascii_c.obj ascii.c
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/ascii_c.exe file ..\.build\ascii_c.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/ascii_c.disasm.txt ..\.build\ascii_c.obj
+
+$ $WATCOM\binnt64\wdis.exe -a -l=../results/ascii_c.generated.asm ..\.build\ascii_c.obj
+
+$ $WATCOM\binnt64\wasm.exe -q -0 -fo=..\.build\sumdata.obj sumdata.asm
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/sumdata.exe file ..\.build\sumdata.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/sumdata.disasm.txt ..\.build\sumdata.obj
+
+$ $WATCOM\binnt64\wasm.exe -q -0 -fo=..\.build\sumn.obj sumn.asm
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/sumn.exe file ..\.build\sumn.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/sumn.disasm.txt ..\.build\sumn.obj
+
+$ $WATCOM\binnt64\wasm.exe -q -0 -fo=..\.build\sumreg.obj sumreg.asm
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/sumreg.exe file ..\.build\sumreg.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/sumreg.disasm.txt ..\.build\sumreg.obj
+
+$ $WATCOM\binnt64\wasm.exe -q -0 -fo=..\.build\sumstack.obj sumstack.asm
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/sumstack.exe file ..\.build\sumstack.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/sumstack.disasm.txt ..\.build\sumstack.obj
+
+$ $WATCOM\binnt64\wcc.exe -q -0 -ms -od -d2 -bt=dos -fo=..\.build\sum_c.obj sum.c
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/sum_c.exe file ..\.build\sum_c.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/sum_c.disasm.txt ..\.build\sum_c.obj
+
+$ $WATCOM\binnt64\wdis.exe -a -l=../results/sum_c.generated.asm ..\.build\sum_c.obj
+
+$ $WATCOM\binnt64\wasm.exe -q -0 -fo=..\.build\mult.obj mult.asm
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/mult.exe file ..\.build\mult.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/mult.disasm.txt ..\.build\mult.obj
+
+$ $WATCOM\binnt64\wcc.exe -q -0 -ms -od -d2 -bt=dos -fo=..\.build\mult_c.obj mult.c
+
+$ $WATCOM\binnt64\wlink.exe system dos option quiet name ../bin/mult_c.exe file ..\.build\mult_c.obj
+
+$ $WATCOM\binnt64\wdis.exe -l=../results/mult_c.disasm.txt ..\.build\mult_c.obj
+
+$ $WATCOM\binnt64\wdis.exe -a -l=../results/mult_c.generated.asm ..\.build\mult_c.obj

@@ -1,0 +1,4 @@
+Enter n (1-100): 99999999999999999999
+Invalid input. Please enter 1-100.
+Enter n (1-100): 10
+Sum = 55

@@ -1,0 +1,65 @@
+Module: ascjump.asm
+GROUP: 'DGROUP' _DATA,STACK
+
+Segment: _TEXT WORD USE16 0000004A bytes
+0000				main:
+0000  B8 00 00				mov		ax,DGROUP
+0003  8E D8				mov		ds,ax
+0005  B3 61				mov		bl,0x61
+0007  B7 02				mov		bh,0x02
+0009				L$1:
+0009  B9 0D 00				mov		cx,0x000d
+000C				L$2:
+000C  8A D3				mov		dl,bl
+000E  E8 1B 00				call		put_char
+0011  FE C3				inc		bl
+0013  83 F9 01				cmp		cx,0x0001
+0016  74 05				je		L$3
+0018  B2 20				mov		dl,0x20
+001A  E8 0F 00				call		put_char
+001D				L$3:
+001D  49				dec		cx
+001E  75 EC				jne		L$2
+0020  E8 16 00				call		put_newline
+0023  FE CF				dec		bh
+0025  75 E2				jne		L$1
+0027  B8 00 4C				mov		ax,0x4c00
+002A  CD 21				int		0x21
+002C				put_char:
+002C  50				push		ax
+002D  53				push		bx
+002E  51				push		cx
+002F  52				push		dx
+0030  B4 02				mov		ah,0x02
+0032  CD 21				int		0x21
+0034  5A				pop		dx
+0035  59				pop		cx
+0036  5B				pop		bx
+0037  58				pop		ax
+0038  C3				ret
+0039				put_newline:
+0039  50				push		ax
+003A  53				push		bx
+003B  51				push		cx
+003C  52				push		dx
+003D  8D 16 00 00			lea		dx,DGROUP:L$4
+0041  B4 09				mov		ah,0x09
+0043  CD 21				int		0x21
+0045  5A				pop		dx
+0046  59				pop		cx
+0047  5B				pop		bx
+0048  58				pop		ax
+0049  C3				ret
+
+Routine Size: 74 bytes,    Routine Base: _TEXT + 0000
+
+No disassembly errors
+
+Segment: _DATA WORD USE16 00000003 bytes
+0000				L$4:
+0000  0D 0A 24                                        ..$
+
+Segment: STACK PARA USE16 00000100 bytes
+
+BSS Size: 256 bytes
+

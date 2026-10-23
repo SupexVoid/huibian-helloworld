@@ -1,0 +1,61 @@
+Module: sumstack.asm
+GROUP: 'DGROUP' _DATA,STACK
+
+Segment: _TEXT WORD USE16 00000051 bytes
+0000  B8 00 00				mov		ax,DGROUP
+0003  8E D8				mov		ds,ax
+0005  55				push		bp
+0006  8B EC				mov		bp,sp
+0008  83 EC 02				sub		sp,0x0002
+000B  C7 46 FE 00 00			mov		word ptr -0x2[bp],0x0000
+0010  B9 64 00				mov		cx,0x0064
+0013				L$1:
+0013  01 4E FE				add		-0x2[bp],cx
+0016  E2 FB				loop		L$1
+0018  8B 46 FE				mov		ax,-0x2[bp]
+001B  E8 10 00				call		print_uint
+001E  8B E5				mov		sp,bp
+0020  5D				pop		bp
+0021  8D 16 00 00			lea		dx,DGROUP:L$4
+0025  B4 09				mov		ah,0x09
+0027  CD 21				int		0x21
+0029  B8 00 4C				mov		ax,0x4c00
+002C  CD 21				int		0x21
+002E				print_uint:
+002E  50				push		ax
+002F  53				push		bx
+0030  51				push		cx
+0031  52				push		dx
+0032  33 C9				xor		cx,cx
+0034  BB 0A 00				mov		bx,0x000a
+0037				L$2:
+0037  33 D2				xor		dx,dx
+0039  F7 F3				div		bx
+003B  52				push		dx
+003C  41				inc		cx
+003D  83 F8 00				cmp		ax,0x0000
+0040  75 F5				jne		L$2
+0042				L$3:
+0042  5A				pop		dx
+0043  80 C2 30				add		dl,0x30
+0046  B4 02				mov		ah,0x02
+0048  CD 21				int		0x21
+004A  E2 F6				loop		L$3
+004C  5A				pop		dx
+004D  59				pop		cx
+004E  5B				pop		bx
+004F  58				pop		ax
+0050  C3				ret
+
+Routine Size: 81 bytes,    Routine Base: _TEXT + 0000
+
+No disassembly errors
+
+Segment: _DATA WORD USE16 00000003 bytes
+0000				L$4:
+0000  0D 0A 24                                        ..$
+
+Segment: STACK PARA USE16 00000100 bytes
+
+BSS Size: 256 bytes
+

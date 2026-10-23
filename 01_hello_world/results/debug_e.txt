@@ -1,0 +1,25 @@
+-n HELLOE.COM
+-e 0100 0e 1f ba 0e 01 b4 09 cd 21 b8 00 4c cd 21
+-e 010e 48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21 0d 0a 24
+-u 0100 010d
+0725:0100 0E                PUSH    CS
+0725:0101 1F                POP     DS
+0725:0102 BA0E01            MOV     DX,010E
+0725:0105 B409              MOV     AH,09
+0725:0107 CD21              INT     21
+0725:0109 B8004C            MOV     AX,4C00
+0725:010C CD21              INT     21
+-d 010e 011d
+0725:0100                         -                  48 65               He
+0725:0110  6C 6C 6F 2C 20 57 6F 72-6C 64 21 0D 0A 24       llo, World!..$
+-r bx
+BX 0000  :0000
+-r cx
+CX 0000  :001e
+-w
+Writing 001E bytes
+-g=0100
+Hello, World!
+
+Program terminated normally (0000)
+-q

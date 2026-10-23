@@ -1,0 +1,105 @@
+Module: mult.asm
+GROUP: 'DGROUP' _DATA,STACK
+
+Segment: _TEXT WORD USE16 00000090 bytes
+0000				main:
+0000  B8 00 00				mov		ax,DGROUP
+0003  8E D8				mov		ds,ax
+0005  BA 00 00				mov		dx,offset DGROUP:L$6
+0008  B4 09				mov		ah,0x09
+000A  CD 21				int		0x21
+000C  BB 09 00				mov		bx,0x0009
+000F				L$1:
+000F  B9 01 00				mov		cx,0x0001
+0012				L$2:
+0012  E8 1A 00				call		PrintTerm
+0015  3B CB				cmp		cx,bx
+0017  73 0B				jae		L$3
+0019  B2 20				mov		dl,0x20
+001B  E8 5C 00				call		PutChar
+001E  E8 59 00				call		PutChar
+0021  41				inc		cx
+0022  EB EE				jmp		L$2
+0024				L$3:
+0024  E8 5C 00				call		NewLine
+0027  4B				dec		bx
+0028  75 E5				jne		L$1
+002A  B8 00 4C				mov		ax,0x4c00
+002D  CD 21				int		0x21
+002F				PrintTerm:
+002F  50				push		ax
+0030  53				push		bx
+0031  51				push		cx
+0032  52				push		dx
+0033  8B D3				mov		dx,bx
+0035  80 C2 30				add		dl,0x30
+0038  E8 3F 00				call		PutChar
+003B  B2 2A				mov		dl,0x2a
+003D  E8 3A 00				call		PutChar
+0040  8B D1				mov		dx,cx
+0042  80 C2 30				add		dl,0x30
+0045  E8 32 00				call		PutChar
+0048  B2 3D				mov		dl,0x3d
+004A  E8 2D 00				call		PutChar
+004D  8B C3				mov		ax,bx
+004F  F6 E1				mul		cl
+0051  E8 05 00				call		PrintUnsigned
+0054  5A				pop		dx
+0055  59				pop		cx
+0056  5B				pop		bx
+0057  58				pop		ax
+0058  C3				ret
+0059				PrintUnsigned:
+0059  50				push		ax
+005A  53				push		bx
+005B  51				push		cx
+005C  52				push		dx
+005D  BB 0A 00				mov		bx,0x000a
+0060  33 C9				xor		cx,cx
+0062				L$4:
+0062  33 D2				xor		dx,dx
+0064  F7 F3				div		bx
+0066  52				push		dx
+0067  41				inc		cx
+0068  85 C0				test		ax,ax
+006A  75 F6				jne		L$4
+006C				L$5:
+006C  5A				pop		dx
+006D  80 C2 30				add		dl,0x30
+0070  E8 07 00				call		PutChar
+0073  E2 F7				loop		L$5
+0075  5A				pop		dx
+0076  59				pop		cx
+0077  5B				pop		bx
+0078  58				pop		ax
+0079  C3				ret
+007A				PutChar:
+007A  50				push		ax
+007B  52				push		dx
+007C  B4 02				mov		ah,0x02
+007E  CD 21				int		0x21
+0080  5A				pop		dx
+0081  58				pop		ax
+0082  C3				ret
+0083				NewLine:
+0083  52				push		dx
+0084  B2 0D				mov		dl,0x0d
+0086  E8 F1 FF				call		PutChar
+0089  B2 0A				mov		dl,0x0a
+008B  E8 EC FF				call		PutChar
+008E  5A				pop		dx
+008F  C3				ret
+
+Routine Size: 144 bytes,    Routine Base: _TEXT + 0000
+
+No disassembly errors
+
+Segment: _DATA WORD USE16 00000013 bytes
+0000				L$6:
+0000  54 68 65 20 39 6D 75 6C 39 20 74 61 62 6C 65 3A The 9mul9 table:
+0010  0D 0A 24                                        ..$
+
+Segment: STACK PARA USE16 00000100 bytes
+
+BSS Size: 256 bytes
+

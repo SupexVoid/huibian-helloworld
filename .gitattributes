@@ -1,0 +1,11 @@
+*.asm text eol=crlf
+*.inc text eol=crlf
+*.c text eol=crlf
+*.dbg text eol=crlf
+*.bat text eol=crlf
+*.md text eol=lf
+*.py text eol=lf
+*.txt text eol=lf
+**/results/*.txt -text
+*.exe binary
+*.com binary
