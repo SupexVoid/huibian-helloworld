@@ -1,19 +1,43 @@
-# 8086 汇编语言四次作业
+# 8086 汇编语言实验
 
-按题目截图完成的四个独立作业。每个文件夹包含源码、DOS 可执行程序、实际运行结果和中文说明；第 2～4 题还包含 C 对照实现与真实编译结果的反汇编注释。
+本实验以 8086 指令系统和 DOS 中断为基础，分别研究字符串输出、双重循环、整数求和、乘法运算与过程调用。通过汇编程序、C 程序及反汇编分析，观察寄存器、数据段、堆栈和控制转移指令的使用。
 
-| 作业 | 文件夹 | 已实现内容 |
+## 实验内容
+
+| 实验 | 文件夹 | 主要内容 |
 |---|---|---|
-| 1. Hello World | [01_hello_world](01_hello_world) | 汇编→链接 EXE；DEBUG `u` 观察源码与机器码；DEBUG `e` 写入代码和数据并执行、生成 COM |
-| 2. ASCII 表 | [02_ascii_table](02_ascii_table) | 小写 a～z，每行 13 个；LOOP 双循环、条件跳转双循环、C 对照 |
-| 3. 求和 | [03_sum](03_sum) | 寄存器／数据段／栈三种存储方式；打印 5050；输入 1～100 求和；C 对照 |
-| 4. 九九乘法表 | [04_multiplication](04_multiplication) | 按题图从 9 到 1 的倒三角乘法表；MUL、CALL/RET、寄存器保护与恢复、C 对照 |
+| 一、Hello World | [01_hello_world](01_hello_world) | 汇编与链接；DEBUG 反汇编；直接输入机器码并运行 |
+| 二、ASCII 表 | [02_ascii_table](02_ascii_table) | 每行输出 13 个小写字母；LOOP 双重循环；条件转移指令；C 反汇编分析 |
+| 三、求和 | [03_sum](03_sum) | 寄存器、数据段和栈内存三种结果存储方式；十进制转换；输入 1～100 的整数求和 |
+| 四、九九乘法表 | [04_multiplication](04_multiplication) | 倒三角乘法表；MUL；CALL/RET；过程调用中的寄存器保护与恢复 |
 
-## 查看与运行
+## 实验环境
 
-每题的 `src/` 是带注释的源代码，`bin/` 是已生成的 16 位 DOS 程序，`results/` 是实际输出、机器码和反汇编清单。每题 README 均提供要求与文件的对应表。第 1 题的 `debug/` 另附 DEBUG 实验步骤和可重放脚本，第 2～4 题的 `disassembly-notes.md` 解释实际指令与 C 语句的关系。
+- 指令集与目标平台：8086、16 位 DOS，small 内存模型。
+- 汇编与 C 编译工具：[Open Watcom V2](https://github.com/open-watcom/open-watcom-v2/releases/tag/Current-build) 的 WASM、WCC、WLINK。
+- 反汇编工具：WDIS、FreeDOS DEBUG 2.51。
+- 运行环境：[DOSBox Staging 0.83.0](https://github.com/dosbox-staging/dosbox-staging/releases/tag/v0.83.0)。
 
-直接下载仓库后，可以在 DOSBox 中挂载本地目录，再进入某题的 `bin` 文件夹运行程序。示例（把本机仓库路径替换为实际路径）：
+汇编程序采用 MASM 风格语法；C 程序以 8086 指令集编译，并关闭优化，以便分析变量与指令的对应关系。工具版本和校验值见 [TOOLCHAIN.md](TOOLCHAIN.md)。
+
+## 文件结构
+
+各实验目录中的 `src/` 存放源代码，`bin/` 存放 DOS 可执行程序，`results/` 存放运行记录、机器码和反汇编清单。各目录的 README 说明程序原理与实验步骤。
+
+实验一的 `debug/` 存放 DEBUG 操作脚本与指令分析。实验二至四的 `disassembly-notes.md` 说明 C 语句与汇编指令的对应关系：`*.disasm.txt` 记录机器码和段内地址，`*.generated.asm` 记录 WDIS 导出的指令与常量，`*.annotated.asm` 在相同指令上添加中文注释。反汇编清单省略 DWARF 调试元数据。
+
+## 编译与运行
+
+在 Windows PowerShell 中，从仓库根目录运行以下命令，工具路径应替换为本机安装路径：
+
+```powershell
+python scripts/build.py --watcom C:\WATCOM
+python scripts/run_dos.py --dosbox C:\DOSBox\dosbox.exe
+```
+
+构建脚本生成 11 个 EXE 及反汇编清单；实验一的 COM 通过 DEBUG 的 `e`、`w` 命令生成，操作步骤见该实验说明。运行脚本在 DOSBox 中批量执行程序，将输出保存到各实验的 `results/`，并核对结果与格式。脚本使用 Python 标准库，中间文件存放于 `.build/` 和 `.run/`。
+
+也可在 DOSBox 中挂载实验目录，进入相应的 `bin` 文件夹运行。以下以求和实验为例，挂载路径应替换为本机路径：
 
 ```dos
 mount c "C:\path\huibian-helloworld"
@@ -25,37 +49,23 @@ sumstack
 sumn
 ```
 
-`sumn` 会提示输入 1～100 的整数。其余题目分别执行 `hello`／`helloe`、`ascloop`／`ascjump`／`ascii_c`、`mult`／`mult_c`。C 固定求和版本执行 `sum_c`。这些程序使用 DOS 中断，需要 DOS 或 DOSBox，不能作为现代 Windows 原生程序直接启动。
+`sumn` 读取 1～100 的整数并输出求和结果。其他实验的程序分别为 `hello`、`helloe`、`ascloop`、`ascjump`、`ascii_c`、`sum_c`、`mult` 和 `mult_c`。程序使用 DOS 中断，在 DOS 或 DOSBox 中运行。各实验说明另列出单独编译和 DEBUG 调试命令。
 
-## 从源码重建
+## 实验结果与分析
 
-使用 [Open Watcom V2 官方发行](https://github.com/open-watcom/open-watcom-v2/releases/tag/Current-build) 的 WASM、WCC、WLINK、WDIS，和 [DOSBox Staging 0.83.0](https://github.com/dosbox-staging/dosbox-staging/releases/tag/v0.83.0)。手写汇编采用 8086 指令、MASM 风格的小内存模型；C 编译为 8086、16 位 small model，关闭优化便于学习反汇编。
+2026-10-23 的运行记录包含 119 次程序执行，7 组检查均通过：
 
-在 Windows PowerShell 中，从仓库根目录运行（替换工具路径）：
+- EXE 与 COM 两种字符串输出程序均输出 `Hello, World!`。
+- ASCII 表的两种汇编实现与 C 实现结果一致，每行输出 13 个字母。
+- 三种存储方式的求和程序及 C 程序均输出 `5050`。输入求和覆盖 n=1～100，并检查 8 类非法输入。
+- 汇编与 C 乘法表均按行因子从 9 到 1 输出，共 45 个正确算式。
 
-```powershell
-python scripts/build.py --watcom C:\WATCOM
-python scripts/run_dos.py --dosbox C:\DOSBox\dosbox.exe
-```
+实验一的 DEBUG 记录分别为 [e 命令写入与运行](01_hello_world/results/debug_e.txt) 和 [u 命令反汇编及单步观察](01_hello_world/results/debug_u.txt)。生成的 COM 长度为 30 字节，与输入的机器码一致。
 
-Python 脚本仅使用标准库。第一步生成 11 个 EXE 和真实反汇编；第 1 题的 COM 已由 DEBUG `e` 实验生成，也可以按该题脚本重建。第二步在隐藏的 DOSBox 中执行程序，重定向结果到每题的 `results/`，随后自动核对输出。中间文件保存在忽略的 `.build/` 和 `.run/` 中。
+运行结果：[ASCII 表](02_ascii_table/results/ascloop.txt)、[固定求和](03_sum/results/sumreg.txt)、[输入 100 求和](03_sum/results/input_100.txt)、[九九乘法表](04_multiplication/results/mult.txt)。相关记录见 [编译日志](BUILD_LOG.txt)、[模拟器日志](DOSBOX_LOG.txt) 和 [测试记录](TEST_REPORT.txt)。
 
-中文注释版 `*.annotated.asm` 是对 `wdis -a` 实际输出添加的学习注释；`*.disasm.txt` 显示真实机器码和段内地址，`*.generated.asm` 保留工具生成的代码及常量。为方便阅读和避免混入本机路径，导出省略了 DWARF 调试元数据。重新构建会更新原始清单，修改 C 程序后需同步核对中文注释版。
-
-传统 MASM/LINK 的单题构建与 DEBUG 操作示例见各题说明；本仓库实际验证使用上述 Open Watcom 工具链。工具版本与下载校验值见 [TOOLCHAIN.md](TOOLCHAIN.md)。
-
-## 实际验证结果
-
-2026-10-23，在 DOSBox Staging 0.83.0 中完成 **119 次程序运行**，7 组自动检查全部通过：Hello World 两种文件格式、ASCII 三种实现、四个固定求和程序、全部 100 个合法 n、8 类非法输入，以及汇编/C 两种乘法表的全部 45 个算式。
-
-第 1 题另使用 **FreeDOS DEBUG 2.51** 完成两次真实会话，记录 [DEBUG e 写内存并执行](01_hello_world/results/debug_e.txt) 和 [DEBUG u／单步／观察数据段](01_hello_world/results/debug_u.txt)。COM 文件与 DEBUG 实际写出的 30 字节一致。
-
-代表性结果：[ASCII 表](02_ascii_table/results/ascloop.txt)、[5050](03_sum/results/sumreg.txt)、[输入 100](03_sum/results/input_100.txt)、[九九乘法表](04_multiplication/results/mult.txt)。完整构建日志为 [BUILD_LOG.txt](BUILD_LOG.txt)，模拟器日志为 [DOSBOX_LOG.txt](DOSBOX_LOG.txt)，验收报告为 [TEST_REPORT.txt](TEST_REPORT.txt)。
-
-只检查已保存的结果，无需安装编译器和 DOSBox：
+对已保存的运行结果进行校验：
 
 ```powershell
 python scripts/verify.py
 ```
-
-运行结果均由实际程序生成，保存为文本记录，便于直接在 GitHub 中查看。

@@ -1,8 +1,8 @@
-# 作业 3：求和与十进制输入输出
+# 实验三：求和与十进制输入输出
 
-计算 `1+2+…+100`，打印十进制 `5050`；再实现用户输入 `1～100` 的任意整数 `n`，输出 `1+…+n`。
+计算 `1+2+…+100` 并打印十进制结果 `5050`，分别考察寄存器、数据段和栈内存三种结果存储方式；通过 DOS 缓冲输入读取 `1～100` 的整数 `n`，计算并输出 `1+…+n`。
 
-| 图片要求 | 源码 | DOS 程序 | 实际运行结果 |
+| 实验内容 | 源码 | DOS 程序 | 运行结果 |
 |---|---|---|---|
 | 结果保存在寄存器中 | [sumreg.asm](src/sumreg.asm) | [sumreg.exe](bin/sumreg.exe) | [5050](results/sumreg.txt) |
 | 结果保存在数据段中 | [sumdata.asm](src/sumdata.asm) | [sumdata.exe](bin/sumdata.exe) | [5050](results/sumdata.txt) |
@@ -39,7 +39,7 @@ Sum = 55
 
 ## 编译与运行
 
-推荐在仓库根目录执行统一构建脚本，见 [总说明](../README.md)。单独构建一个程序时，在本目录 `src` 下运行（先建立 `bin`、`.build`、`results`）：
+统一构建方法见 [实验总说明](../README.md)。单独构建一个程序时，在本目录 `src` 下运行（先建立 `bin`、`.build`、`results`）：
 
 ```bat
 wasm -q -0 -fo=..\.build\sumreg.obj sumreg.asm

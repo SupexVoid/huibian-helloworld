@@ -1,4 +1,4 @@
-# 作业一：Hello, World!
+# 实验一：Hello, World!
 
 本目录用两种方式生成并运行 8086 DOS 程序。两者均调用 DOS `int 21h` 的 `AH=09h` 功能，输出 `Hello, World!` 和 DOS 换行（`0D 0A`）。字符串末尾的 `$` 是结束标志，不属于输出内容。
 
@@ -52,8 +52,8 @@ DEBUG < ..\DEBUG\HELLO_E.DBG
 
 脚本通过 `e` 写入代码与数据，以 `u`、`d` 检查内容，将 `BX:CX=0000:001E` 设为文件长度，通过 `w` 写出 `HELLOE.COM`，最后以 `g=0100` 运行。也可手动逐行输入同一脚本；DEBUG 显示的 `-` 提示符不需要输入。
 
-本仓库已在 DOSBox Staging 0.83.0 中用 FreeDOS DEBUG 2.51 实际执行此脚本。`results/debug_e.txt` 保存原始文本记录，包含 `u` 的七条指令、`Writing 001E bytes`、程序输出及正常退出信息。DEBUG 实际写出的 COM 与脚本中的机器码逐字节相同。独立运行该 COM 的输出另存于 `results/helloe.txt`。这些文本记录来自真实执行，不是模拟终端截图。
+实验环境为 DOSBox Staging 0.83.0 和 FreeDOS DEBUG 2.51。`results/debug_e.txt` 保存原始文本记录，包含 `u` 的七条指令、`Writing 001E bytes`、程序输出及正常退出信息。DEBUG 实际写出的 COM 与脚本中的机器码逐字节相同。独立运行该 COM 的输出另存于 `results/helloe.txt`。
 
-`DEBUG` 不是标准 DOSBox 自带的内部命令。若需要亲自演示 `e`、`u`，须另备可用的 DOS DEBUG 程序；本次使用独立的 FreeDOS `DEBUG.COM`，未把工具二进制放入仓库。不要把 DOSBox 的内部调试器当作 DOS `DEBUG.EXE`。
+DEBUG 操作使用独立的 FreeDOS `DEBUG.COM`。重现实验时，应先将该工具加入 DOS 环境的搜索路径；DOSBox 内部调试器与 DOS DEBUG 的命令接口不同。
 
 详细的逐指令说明见 [debug/README.md](debug/README.md)。

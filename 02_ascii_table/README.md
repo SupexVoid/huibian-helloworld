@@ -1,4 +1,4 @@
-# 作业二：按 ASCII 码输出 a～z
+# 实验二：ASCII 表输出
 
 将 26 个小写英文字母依次输出，每行 13 个，字母之间只有一个空格，行末没有多余空格。两行均以 DOS 的 CR/LF（十六进制 `0D 0A`）结束。
 
@@ -7,7 +7,7 @@ a b c d e f g h i j k l m
 n o p q r s t u v w x y z
 ```
 
-| 要求 | 对应文件 | 实现要点 |
+| 实验内容 | 对应文件 | 实现要点 |
 | --- | --- | --- |
 | 用 LOOP 指令实现双重循环 | `src/ascloop.asm` | 外层循环 2 次，内层循环 13 次；内层开始前 `PUSH CX`，结束后 `POP CX`，保留外层计数 |
 | 用条件转移指令实现双重循环 | `src/ascjump.asm` | 内层 `DEC CX / JNZ`，外层 `DEC BH / JNZ` |

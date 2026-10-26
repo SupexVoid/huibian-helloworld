@@ -1,10 +1,10 @@
-# 实验 4：倒三角九九乘法表
+# 实验四：倒三角九九乘法表
 
 `src/mult.asm` 为 8086 DOS 小模式汇编程序，`src/mult.c` 为相同输出的 C89 程序。两者先输出 `The 9mul9 table:` 和 CR/LF，再输出 9 行。第一行从 `9*1=9` 到 `9*9=81`，第二行从 `8*1=8` 到 `8*8=64`，最后一行为 `1*1=1`。同一行相邻算式以两个空格分隔，行末无空格，共 45 个算式。
 
 ## 算法与寄存器传参
 
-外层循环令 BX 从 9 递减到 1；每一行内，内层循环令 CX 从 1 递增到 BX。每次调用 `PrintTerm`，把 BX、CX 直接作为参数。过程先打印两个因子及 `*`、`=`，再执行真正的 `MUL CL` 求积，并调用 `PrintUnsigned` 打印积。
+外层循环令 BX 从 9 递减到 1；每一行内，内层循环令 CX 从 1 递增到 BX。每次调用 `PrintTerm`，把 BX、CX 直接作为参数。过程先打印两个因子及 `*`、`=`，再执行 `MUL CL` 求积，并调用 `PrintUnsigned` 打印积。
 
 `MUL CL` 为 8086 的 8 位无符号乘法，隐含被乘数为 AL，结果写入整个 AX。代码先执行 `MOV AX,BX`，所以 AL 是行因子，CL 是列因子。乘积范围为 1..81，AH 必为 0；MUL 此时将 CF、OF 清零，其他算术标志未定义，后续代码不依赖它们。`MUL` 与有符号乘法 `IMUL` 不同。它会覆盖原 AX，原 AX 已由过程入口的 PUSH 保存。
 
@@ -27,7 +27,7 @@
 
 所有过程都是同代码段的 NEAR 过程。8086 执行 `CALL` 时，先令 SP 减 2，再将返回地址 IP 压入 SS:SP；`RET` 弹出该 IP，使 SP 加 2。每个过程中的寄存器 PUSH 都有反序 POP；`PrintUnsigned` 的每个余数 PUSH 也恰好对应一次数字 POP。因此每次调用返回后 SP 恢复为 CALL 之前的值，既不需要也没有 `RET n` 参数清理。
 
-`.STACK 100h` 在目标文件中声明 256 字节栈；本仓库使用的 WLINK 默认把最终 EXE 的栈扩为 4 KiB，交付 EXE 的初始 SP 为 `1000h`。对本题最大两位数的乘积，最深的普通过程调用链是 `main → PrintTerm → PrintUnsigned → PutChar`。在打印两位数的首位时，过程返回地址和保存寄存器共占 26 字节，另有 1 个未输出余数占 2 字节，共 28 字节。执行 `INT 21h` 时还会压入 FLAGS、CS、IP，共 6 字节，即这部分可见栈用量为 34 字节；DOS 内部另有自身实现相关的栈行为，不能把 34 当作整个操作系统的完整栈需求。
+`.STACK 100h` 在目标文件中声明 256 字节栈；本仓库使用的 WLINK 默认把最终 EXE 的栈扩为 4 KiB，生成 EXE 的初始 SP 为 `1000h`。对本题最大两位数的乘积，最深的普通过程调用链是 `main → PrintTerm → PrintUnsigned → PutChar`。在打印两位数的首位时，过程返回地址和保存寄存器共占 26 字节，另有 1 个未输出余数占 2 字节，共 28 字节。执行 `INT 21h` 时还会压入 FLAGS、CS、IP，共 6 字节，即这部分可见栈用量为 34 字节；DOS 内部另有自身实现相关的栈行为，不能把 34 当作整个操作系统的完整栈需求。
 
 ## 构建、反汇编与运行
 
@@ -50,6 +50,6 @@ bin\mult.exe > results\mult.txt
 bin\mult_c.exe > results\mult_c.txt
 ```
 
-输出文件必须来自真实 DOS 程序执行；截图也必须在真实 DOSBox 窗口捕获。C 标准库以 DOS 文本方式将 `\n` 转为 CR/LF。汇编程序显式输出 13、10。
+运行输出分别保存在 `results/mult.txt` 和 `results/mult_c.txt`。C 标准库以 DOS 文本方式将 `\n` 转为 CR/LF。汇编程序显式输出 13、10。
 
-仓库级验证命令为 `python scripts/verify.py`（从仓库根目录执行），其中第 4 题核对标题、行数、每行项数、所有因子和乘积。真实 C 反汇编见 `results/mult_c.disasm.txt`（地址和机器码）、`results/mult_c.generated.asm`（原始汇编格式的代码与常量导出）、`results/mult_c.annotated.asm`（原样指令配中文注释）；逐段解释见 `disassembly-notes.md`。仓库脚本不启用 WDIS 的源代码交错显示，并省略含本机绝对路径的 DWARF 调试段，保留实际代码、常量、地址和机器码。
+仓库级验证命令为 `python scripts/verify.py`（从仓库根目录执行），其中第 4 题核对标题、行数、每行项数、所有因子和乘积。C 反汇编见 `results/mult_c.disasm.txt`（地址和机器码）、`results/mult_c.generated.asm`（原始汇编格式的代码与常量导出）、`results/mult_c.annotated.asm`（原样指令配中文注释）；逐段解释见 `disassembly-notes.md`。仓库脚本不启用 WDIS 的源代码交错显示，并省略含本机绝对路径的 DWARF 调试段，保留实际代码、常量、地址和机器码。
