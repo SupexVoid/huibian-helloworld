@@ -1,5 +1,5 @@
-; C ��ͳ���ķ����ע�ͣ����ڶ��ձ�����ѭ���ͺ������á�
-; .386p/.387Ϊ����ģ��ָʾ��ʵ��C����ѡ��-0��������Ϊ8086��
+; C 求和程序的反汇编注释，用于对照变量、循环和函数调用。
+; .386p/.387为工具模板指示；实际C编译选项-0，机器码为8086。
 .387
 .386p
 		PUBLIC	sum_to_
@@ -11,7 +11,7 @@
 DGROUP		GROUP	CONST,CONST2,_DATA
 _TEXT		SEGMENT	BYTE PUBLIC USE16 'CODE'
 		ASSUME CS:_TEXT, DS:DGROUP, SS:DGROUP
-; ����sum_to��AX����n������ֵAX����ʼ����Ĵ���������ջ֡��
+; 函数sum_to：AX传入n，返回值AX；开始保存寄存器、建立栈帧。
 sum_to_:
 	push		ax
 	mov		ax,16H
@@ -25,32 +25,32 @@ sum_to_:
 	push		bp
 	mov		bp,sp
 	sub		sp,8
-; n����BP-8��total��BP-2��ʼ��0��i��BP-4��ʼ��1��
+; n存入BP-8；total在BP-2初始化0，i在BP-4初始化1。
 L$1:
 	mov		word ptr -8[bp],ax
 	mov		word ptr -2[bp],0
 	mov		word ptr -4[bp],1
 	jmp		near ptr L$2
-; ѭ���������Ƚ�i��n���޷���JBE��i<=nʱ����ѭ����
+; 循环条件：比较i与n，无符号JBE在i<=n时进入循环。
 L$2:
 	mov		ax,word ptr -4[bp]
 	cmp		ax,word ptr -8[bp]
 	jbe		L$3
 	jmp		near ptr L$5
-; ѭ����total += i���ۼӽ����ջ����BP-2�С�
+; 循环体total += i，累加结果在栈变量BP-2中。
 L$3:
 	mov		ax,word ptr -4[bp]
 	add		word ptr -2[bp],ax
-; i������������ѭ��������
+; i自增，再跳回循环条件。
 L$4:
 	inc		word ptr -4[bp]
 	jmp		L$2
-; ��ȡtotal��ͨ����ʱ��BP-6׼������ֵAX��
+; 读取total并通过临时槽BP-6准备返回值AX。
 L$5:
 	mov		ax,word ptr -2[bp]
 	mov		word ptr -6[bp],ax
 	mov		ax,word ptr -6[bp]
-; �ָ�ջ֡��Ĵ�����RET���ص����ߡ�
+; 恢复栈帧与寄存器，RET返回调用者。
 L$6:
 	mov		sp,bp
 	pop		bp
@@ -60,7 +60,7 @@ L$6:
 	pop		cx
 	pop		bx
 	ret
-; C���п���õ�main�������ȼ��ջ�ռ��ٽ����ֲ�ջ֡��
+; C运行库调用的main函数；先检查栈空间再建立局部栈帧。
 main_:
 	mov		ax,14H
 	call		near ptr __STK
@@ -72,7 +72,7 @@ main_:
 	push		bp
 	mov		bp,sp
 	sub		sp,2
-; AX=64h��100������sum_to������͸�ʽ������ѹջ����printf��
+; AX=64h即100，调用sum_to；结果和格式串逆序压栈交给printf。
 L$7:
 	mov		ax,64H
 	call		near ptr sum_to_
@@ -83,7 +83,7 @@ L$7:
 	add		sp,4
 	mov		word ptr -2[bp],0
 	mov		ax,word ptr -2[bp]
-; AX��������ֵ0���ָ��ֳ�����C�������롣
+; AX保留返回值0，恢复现场返回C启动代码。
 L$8:
 	mov		sp,bp
 	pop		bp
@@ -96,7 +96,7 @@ L$8:
 L$9:
 _TEXT		ENDS
 CONST		SEGMENT	WORD PUBLIC USE16 'DATA'
-; �����ֽ�25h,75h,0Ah,0��Ӧ��ʽ��%u�����к�����ֹ��
+; 常量字节25h,75h,0Ah,0对应格式串%u、换行和零终止。
 L$10:
     DB	25H, 75H, 0aH, 0
 
