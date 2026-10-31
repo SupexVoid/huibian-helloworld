@@ -1,7 +1,7 @@
-; 本文件由真实 mult_c.generated.asm 复制并添加中文注释，指令和标签保持原样。
+; C 乘法表程序的反汇编注释，对应 mult_c.generated.asm。
 ; 编译参数：wcc -0 -ms -od -d2；反汇编工具：Open Watcom wdis。
 ; .387/.386p 是 WDIS 默认输出的模板头；实际编译使用 -0，main_ 指令均兼容 8086。
-; 仅导出实际代码及常量，省略 DWARF 调试数据（含本机源文件绝对路径）。
+; 导出代码和常量，省略含本机路径的 DWARF 调试数据。
 .387
 .386p
 		PUBLIC	main_
@@ -110,7 +110,7 @@ L$12:
 L$13:
 _TEXT		ENDS
 CONST		SEGMENT	WORD PUBLIC USE16 'DATA'
-; 下列四组为真实格式串数据，以 00h 终止；0Ah 为 C 字符串中的换行。
+; 下列四组为格式串数据，以 00h 终止；0Ah 为 C 字符串中的换行。
 L$14:
     DB	54H, 68H, 65H, 20H, 39H, 6dH, 75H, 6cH
     DB	39H, 20H, 74H, 61H, 62H, 6cH, 65H, 3aH

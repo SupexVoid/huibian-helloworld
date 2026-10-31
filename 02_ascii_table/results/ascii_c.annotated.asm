@@ -1,5 +1,5 @@
 ; 中文注释版：保留 ascii_c.generated.asm 中的运行代码与常量段，追加中文注释。
-; 原始文件由实际 ascii_c.obj 经 wdis -a 生成；没有替换或优化指令，省略 DWARF 元数据。
+; 由 ascii_c.obj 经 wdis -a 导出并添加注释；导出时省略 DWARF 元数据。
 ; 指令地址参见同目录 ascii_c.disasm.txt；所有地址都是目标文件段内偏移。
 ; 本文件用于阅读编译结果，程序构建仍使用 src/ascii.c。
 
@@ -43,7 +43,7 @@ L$5: ; 0036：printf("%c", letter) 和 ++letter
 	push		ax ; 将前一条 MOV 准备的 16 位参数压栈；printf 的实参从右向左入栈
 	mov		ax,offset DGROUP:L$14 ; 003A：装入格式串 "%c" 的近指针
 	push		ax ; 将前一条 MOV 准备的 16 位参数压栈；printf 的实参从右向左入栈
-	call		near ptr printf_ ; 调用实际 C 运行库 printf；返回后由调用者清理参数
+	call		near ptr printf_ ; 调用 C 运行库 printf；返回后由调用者清理参数
 	add		sp,4 ; 0041：清理两个 16 位实参（letter 和格式串地址）
 	inc		word ptr -2[bp] ; 0044：++letter，转向下一个 ASCII 字母
 	cmp		word ptr -4[bp],0cH ; 0047：比较 column 与 12，判断是否为最后一列
@@ -54,7 +54,7 @@ L$6: ; 0050：最后一列的分支
 L$7: ; 0053：非最后一列才执行
 	mov		ax,offset DGROUP:L$15 ; 0053：装入格式串 " " 的近指针
 	push		ax ; 将前一条 MOV 准备的 16 位参数压栈；printf 的实参从右向左入栈
-	call		near ptr printf_ ; 调用实际 C 运行库 printf；返回后由调用者清理参数
+	call		near ptr printf_ ; 调用 C 运行库 printf；返回后由调用者清理参数
 	add		sp,2 ; 清理 printf 的一个 16 位格式串地址参数
 L$8: ; 005D：内层 for 的增量
 	inc		word ptr -4[bp] ; 005D：++column
@@ -62,7 +62,7 @@ L$8: ; 005D：内层 for 的增量
 L$9: ; 0062：完成一行后的 printf("\n")
 	mov		ax,offset DGROUP:L$16 ; 0062：装入仅含 LF 和 NUL 的字符串地址
 	push		ax ; 将前一条 MOV 准备的 16 位参数压栈；printf 的实参从右向左入栈
-	call		near ptr printf_ ; 调用实际 C 运行库 printf；返回后由调用者清理参数
+	call		near ptr printf_ ; 调用 C 运行库 printf；返回后由调用者清理参数
 	add		sp,2 ; 清理 printf 的一个 16 位格式串地址参数
 L$10: ; 006C：外层 for 的增量
 	inc		word ptr -6[bp] ; 006C：++row

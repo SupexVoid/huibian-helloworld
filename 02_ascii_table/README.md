@@ -1,63 +1,53 @@
-# 实验二：ASCII 表输出
+# 实验二：字母表输出
 
-将 26 个小写英文字母依次输出，每行 13 个，字母之间只有一个空格，行末没有多余空格。两行均以 DOS 的 CR/LF（十六进制 `0D 0A`）结束。
+输出 26 个小写字母，每行 13 个，字母之间一个空格，行末不加空格：
 
 ```text
 a b c d e f g h i j k l m
 n o p q r s t u v w x y z
 ```
 
-| 实验内容 | 对应文件 | 实现要点 |
-| --- | --- | --- |
-| 用 LOOP 指令实现双重循环 | `src/ascloop.asm` | 外层循环 2 次，内层循环 13 次；内层开始前 `PUSH CX`，结束后 `POP CX`，保留外层计数 |
-| 用条件转移指令实现双重循环 | `src/ascjump.asm` | 内层 `DEC CX / JNZ`，外层 `DEC BH / JNZ` |
-| 用 C 实现同样功能 | `src/ascii.c` | C89 的双层 `for` 循环，`printf` 输出字符、间隔和换行 |
-| 分析编译后的汇编 | `results/ascii_c.disasm.txt`、`results/ascii_c.annotated.asm`、`disassembly-notes.md` | 原始反汇编来自实际编译的 C 目标文件，中文注释解释变量、循环、调用和栈 |
+## 两种循环写法
 
-## 程序原理
+[ascloop.asm](src/ascloop.asm) 使用两层 LOOP。外层执行 2 次，内层执行 13 次。由于 LOOP 使用 CX 计数，进入内层前先 PUSH CX 保存外层计数，内层结束后 POP CX 恢复，再执行外层 LOOP。
 
-小写字母的 ASCII 码从 `'a' = 61h = 97` 连续排列到 `'z' = 7Ah = 122`。汇编程序以 `BL` 保存当前字符，每输出一个字母后执行 `INC BL`。第一行输出 `61h～6Dh`（a～m），第二行输出 `6Eh～7Ah`（n～z）。空格为 `20h`，回车为 `0Dh`，换行为 `0Ah`。
+[ascjump.asm](src/ascjump.asm) 使用条件跳转。BH 保存剩余行数，CX 保存本行剩余字母数，分别通过 DEC / JNZ 控制循环，不使用 LOOP。
 
-`LOOP` 隐含使用 `CX`：先将 `CX` 减一，不为零则跳转。因此内、外循环不能同时把自己的计数留在同一个 `CX` 中。`ascloop.asm` 先把外层的 `CX` 压栈，再装入内层计数 13；内层结束时 `CX` 为 0，弹栈恢复外层计数后才执行外层 `LOOP`。两次压栈分别对应两次弹栈，堆栈保持平衡。
+两种程序都用 BL 保存当前字母，从 'a' 开始，每输出一个字母就加一。若不是本行最后一个字母，再输出一个空格。换行使用 DOS 的 CR/LF，即 13、10。
 
-`ascjump.asm` 使用独立计数：`BH` 保存剩余行数，`CX` 保存本行剩余字母数，`BL` 保存当前字母。条件循环用 `DEC` 设置零标志，再由 `JNZ` 判断是否继续；该文件不使用 `LOOP`。
+输出过程会保存和恢复 AX、BX、CX、DX，避免影响主程序的字符和循环计数。
 
-两种汇编程序都在输出字母之后判断当前是否为本行最后一个字母，只有不是最后一个时才输出空格。`put_char` 使用 DOS `INT 21h / AH=02h`，输入为 `DL`；`put_newline` 使用 `INT 21h / AH=09h` 输出 `13,10,'$'`。两个过程均保存并恢复 `AX/BX/CX/DX`，避免输出调用破坏主程序的字符和循环计数。`main` 通过 `INT 21h / AX=4C00h` 返回 DOS，退出码为 0。
+## C 程序与反汇编
 
-## 编译与运行
+[ascii.c](src/ascii.c) 用两层 for 循环实现相同输出。关闭优化后，循环变量位于栈中，循环主要由 CMP 和条件跳转实现，不一定生成 LOOP 指令。
 
-所有汇编源文件限定 `.8086`，使用 MASM 风格的 `.model small`、`.stack`、`.data` 和 `.code`。以下命令从本目录执行；先创建 `bin` 与 `results`，并将相应工具加入 `PATH`。
+- [反汇编分析](disassembly-notes.md)：局部变量、循环和 printf 调用。
+- [机器码清单](results/ascii_c.disasm.txt)、[汇编导出](results/ascii_c.generated.asm)、[中文注释](results/ascii_c.annotated.asm)。
 
-在 DOS 的 MASM 5.x / LINK 环境中：
+## 运行
 
-```bat
-masm src\ascloop.asm,bin\ascloop.obj,nul,nul;
-link bin\ascloop.obj,bin\ascloop.exe,nul;
-masm src\ascjump.asm,bin\ascjump.obj,nul,nul;
-link bin\ascjump.obj,bin\ascjump.exe,nul;
+在 DOSBox 中进入本实验的 bin 目录，分别运行：
+
+```text
+ascloop
+ascjump
+ascii_c
 ```
 
-使用 Open Watcom v2 的 Windows 主机工具构建 16 位 DOS 程序：
+三种实现的输出一致，记录分别见 [ascloop.txt](results/ascloop.txt)、[ascjump.txt](results/ascjump.txt)、[ascii_c.txt](results/ascii_c.txt)。
 
-```bat
-wasm -q -0 -fo=bin\ascloop.obj src\ascloop.asm
-wlink system dos option quiet name bin\ascloop.exe file bin\ascloop.obj
-wasm -q -0 -fo=bin\ascjump.obj src\ascjump.asm
-wlink system dos option quiet name bin\ascjump.exe file bin\ascjump.obj
-wcc -q -0 -ms -od -d2 -fo=bin\ascii_c.obj src\ascii.c
-wlink system dos option quiet name bin\ascii_c.exe file bin\ascii_c.obj
-wdis -l=results\ascii_c.disasm.txt bin\ascii_c.obj
-wdis -a -l=results\ascii_c.generated.asm bin\ascii_c.obj
+## 单独编译
+
+配置好 Open Watcom 后，从本实验目录执行，先建立 .build、bin、results 目录：
+
+```text
+wasm -q -0 -fo=.build\ascloop.obj src\ascloop.asm
+wlink system dos option quiet name bin\ascloop.exe file .build\ascloop.obj
+wasm -q -0 -fo=.build\ascjump.obj src\ascjump.asm
+wlink system dos option quiet name bin\ascjump.exe file .build\ascjump.obj
+wcc -q -0 -ms -od -d2 -bt=dos -fo=.build\ascii_c.obj src\ascii.c
+wlink system dos option quiet name bin\ascii_c.exe file .build\ascii_c.obj
+wdis -l=results\ascii_c.disasm.txt .build\ascii_c.obj
 ```
 
-`-0` 指定 8086 指令集；`-ms` 使用 small 内存模型；`-od` 关闭优化以便对照 C 源码；`-d2` 保留调试信息。C 编译和链接还需要安装目录中的 DOS 头文件及库，按根目录的工具链说明设置 `WATCOM`、`PATH` 和 `INCLUDE`。C 程序的 `\n` 经 DOS C 运行库的文本输出转换成 CR/LF。
-
-在真实 DOS 或 DOSBox 中运行，可将原始输出保存到文件：
-
-```bat
-bin\ascloop.exe > results\ascloop.txt
-bin\ascjump.exe > results\ascjump.txt
-bin\ascii_c.exe > results\ascii_c.txt
-```
-
-Windows 不能直接执行这些 16 位 DOS EXE。完整的自动构建、DOSBox 运行和输出校验方法见仓库根目录说明及 `scripts`。
+工具配置和批量构建方法见[构建与检查](../docs/README.md)。
