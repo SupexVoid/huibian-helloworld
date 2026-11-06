@@ -53,3 +53,7 @@ bin\mult_c.exe > results\mult_c.txt
 运行输出分别保存在 `results/mult.txt` 和 `results/mult_c.txt`。C 标准库以 DOS 文本方式将 `\n` 转为 CR/LF。汇编程序显式输出 13、10。
 
 仓库级验证命令为 `python scripts/verify.py`（从仓库根目录执行），其中第 4 题核对标题、行数、每行项数、所有因子和乘积。C 反汇编见 `results/mult_c.disasm.txt`（地址和机器码）、`results/mult_c.generated.asm`（原始汇编格式的代码与常量导出）、`results/mult_c.annotated.asm`（原样指令配中文注释）；逐段解释见 `disassembly-notes.md`。仓库脚本不启用 WDIS 的源代码交错显示，并省略含本机绝对路径的 DWARF 调试段，保留实际代码、常量、地址和机器码。
+
+## 开发与调试记录
+
+本实验的定位过程、细节检查和复核结果见[开发与调试日志](../DEVELOPMENT_LOG.md#multiplication)。

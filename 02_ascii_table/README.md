@@ -61,3 +61,7 @@ bin\ascii_c.exe > results\ascii_c.txt
 ```
 
 Windows 不能直接执行这些 16 位 DOS EXE。完整的自动构建、DOSBox 运行和输出校验方法见仓库根目录说明及 `scripts`。
+
+## 开发与调试记录
+
+本实验的定位过程、细节检查和复核结果见[开发与调试日志](../DEVELOPMENT_LOG.md#ascii-table)。

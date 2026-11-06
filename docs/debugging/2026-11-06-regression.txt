@@ -1,0 +1,32 @@
+Regression record: 2026-11-06 (Asia/Shanghai)
+Workspace: separate copy; original sources and previous result files preserved.
+
+$ build.py --watcom $WATCOM
+Built 01_hello_world/bin/hello.exe
+Built 02_ascii_table/bin/ascjump.exe
+Built 02_ascii_table/bin/ascloop.exe
+Built 02_ascii_table/bin/ascii_c.exe
+Built 03_sum/bin/sumdata.exe
+Built 03_sum/bin/sumn.exe
+Built 03_sum/bin/sumreg.exe
+Built 03_sum/bin/sumstack.exe
+Built 03_sum/bin/sum_c.exe
+Built 04_multiplication/bin/mult.exe
+Built 04_multiplication/bin/mult_c.exe
+exit_code=0
+
+$ run_dos.py --dosbox $DOSBOX
+Captured 119 real DOS program runs.
+test_all_one_hundred_input_values (__main__.AssignmentOutputTests.test_all_one_hundred_input_values) ... ok
+test_ascii_loop_and_conditional_and_c (__main__.AssignmentOutputTests.test_ascii_loop_and_conditional_and_c) ... ok
+test_debug_entered_com (__main__.AssignmentOutputTests.test_debug_entered_com) ... ok
+test_hello_exe (__main__.AssignmentOutputTests.test_hello_exe) ... ok
+test_invalid_input_retries_without_overflow (__main__.AssignmentOutputTests.test_invalid_input_retries_without_overflow) ... ok
+test_multiplication_assembly_and_c (__main__.AssignmentOutputTests.test_multiplication_assembly_and_c) ... ok
+test_sum_storage_variants_and_c (__main__.AssignmentOutputTests.test_sum_storage_variants_and_c) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.016s
+
+OK
+exit_code=0

@@ -56,3 +56,7 @@ wdis -l=..\results\sum_c.disasm.txt ..\.build\sum_c.obj
 [真实机器码清单](results/sum_c.disasm.txt)、[真实反汇编汇编文本](results/sum_c.generated.asm)、[中文逐段注释](results/sum_c.annotated.asm)、[变量与指令对照说明](disassembly-notes.md)。
 
 实际运行了全部 100 个合法输入，结果均与 `n(n+1)/2` 核对；另运行了 8 类非法输入并在提示后输入 10，均得到 55。记录位于 `results/input_001.txt` 到 `input_100.txt` 和 `invalid_*.txt`。例如 [空输入](results/invalid_empty.txt)、[101 越界](results/invalid_large.txt)、[过长数字](results/invalid_long.txt)。这些输出由统一运行脚本从 DOSBox 获取。
+
+## 开发与调试记录
+
+本实验的定位过程、细节检查和复核结果见[开发与调试日志](../DEVELOPMENT_LOG.md#sum-storage)。

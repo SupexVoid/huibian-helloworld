@@ -57,3 +57,7 @@ DEBUG < ..\DEBUG\HELLO_E.DBG
 DEBUG 操作使用独立的 FreeDOS `DEBUG.COM`。重现实验时，应先将该工具加入 DOS 环境的搜索路径；DOSBox 内部调试器与 DOS DEBUG 的命令接口不同。
 
 详细的逐指令说明见 [debug/README.md](debug/README.md)。
+
+## 开发与调试记录
+
+本实验的定位过程、细节检查和复核结果见[开发与调试日志](../DEVELOPMENT_LOG.md#hello-world)。
