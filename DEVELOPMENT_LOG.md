@@ -100,3 +100,23 @@
 - **结果**：本次回归遍历全部 100 个合法 n，均与独立计算的 `n(n+1)/2` 相符。前导零最多允许三位，例如 `001` 作为 1；空格或正负号不作自动纠正。
 - **证据**：[输入版源码](03_sum/src/sumn.asm)、[n=1](03_sum/results/input_001.txt)、[n=100](03_sum/results/input_100.txt)、[校验器](scripts/verify.py)。
 
+<a id="multiplication"></a>
+## 五、乘法表：过程现场与实际栈空间
+
+### 9. 十进制输出过程不能破坏行列计数
+
+- **类别与日期**：本次代码检查与回归运行，2026-11-06。
+- **检查点**：主循环以 BX 保存行因子、CX 保存列因子，而十进制转换同样需要 BX、CX；DOS 字符输出还可能改写 AL。
+- **处理**：PrintTerm 和 PrintUnsigned 显式保存 AX/BX/CX/DX；PutChar 保存 AX、DX。所有 PUSH 按相反顺序 POP。`MUL CL` 的输入是 AL 与 CL，结果在 AX，打印之前不再依赖乘法前的 AX 值。
+- **结果**：输出包含 9 行、45 个算式，最大乘积为 81；汇编版和 C 版输出完全一致。CALL 压入的近返回地址由 RET 弹出，局部保存的寄存器由过程自行恢复。
+- **证据**：[过程源码](04_multiplication/src/mult.asm)、[汇编结果](04_multiplication/results/mult.txt)、[C 结果](04_multiplication/results/mult_c.txt)。
+
+### 10. `.STACK 100h` 与最终 EXE 的初始 SP 不相等
+
+- **类别与日期**：历史记录复核与本次文件头检查；原复核 2026-10-23，整理 2026-11-06。
+- **观察**：源码声明 `.STACK 100h`，但 EXE 装入记录显示 `SP=1000h`。直接把 256 字节写成最终可执行文件的实际栈大小不准确。
+- **定位**：WLINK 的 DOS 配置在链接阶段把栈扩为 4 KiB。源文件的 STACK 段声明与链接后 MZ 头的 SS:SP 是不同阶段的信息。
+- **处理**：以 EXE 头和装入后的寄存器为依据说明运行栈；文档分别写出声明值 `100h` 与初始 SP `1000h`。本次检查 `mult.exe` 文件头偏移 `10h` 的 16 位值也为 `1000h`。
+- **结果**：寄存器保存、余数和返回地址的栈占用分析保持独立，不用源文件声明值代替链接结果。
+- **证据**：[乘法表分析](04_multiplication/README.md)、[DEBUG 初始 SP](01_hello_world/results/debug_u.txt)、[生成文件](04_multiplication/bin/mult.exe)。
+
