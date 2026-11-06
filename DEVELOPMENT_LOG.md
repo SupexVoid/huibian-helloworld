@@ -33,3 +33,22 @@
 - **结果**：记录显示 `Writing 001E bytes`，生成 30 字节文件，`g=0100` 输出 `Hello, World!` 并正常结束。
 - **证据**：[输入脚本](01_hello_world/debug/hello_e.dbg)、[DEBUG 记录](01_hello_world/results/debug_e.txt)、[指令字节分析](01_hello_world/debug/README.md)。
 
+<a id="ascii-table"></a>
+## 二、ASCII 表：双重循环与输出格式
+
+### 3. 内外层 LOOP 共用 CX 时的保护
+
+- **类别与日期**：本次代码检查，2026-11-06。
+- **风险**：内层 LOOP 结束时 CX 为 0。如果此时直接执行外层 LOOP，CX 会减为 `FFFFh`，外层次数失去控制。这里记录的是指令推演与代码检查，不是初版错误输出记录。
+- **定位与处理**：外层计数先设为 2，在每行开始执行 `PUSH CX`，然后装入内层计数 13；内层结束后 `POP CX` 恢复外层计数，再执行外层 LOOP。输出过程也保存、恢复 CX，避免字符输出影响循环。
+- **结果**：LOOP 版、条件跳转版和 C 版的两行输出一致。每次压入外层计数都有对应的弹出操作。
+- **证据**：[LOOP 版](02_ascii_table/src/ascloop.asm)、[条件跳转版](02_ascii_table/src/ascjump.asm)、[运行结果](02_ascii_table/results/ascloop.txt)。
+
+### 4. 行末空格与 CR/LF 的逐字节检查
+
+- **类别与日期**：本次代码检查与回归运行，2026-11-06。
+- **检查点**：屏幕上相似的输出可能仍含行末空格，或只输出 LF。每行的字母数和文件字节数需要单独核对。
+- **处理**：最后一列不输出空格；其余字母之间输出一个 `20h`。汇编版显式输出 `0Dh,0Ah`；C 版经 DOS 文本输出转换换行。
+- **结果**：每行 13 个字母、12 个空格、2 个换行字节，共 27 字节；两行共 54 字节。三份结果逐字节相同。
+- **证据**：[LOOP 输出](02_ascii_table/results/ascloop.txt)、[条件跳转输出](02_ascii_table/results/ascjump.txt)、[C 输出](02_ascii_table/results/ascii_c.txt)。
+
