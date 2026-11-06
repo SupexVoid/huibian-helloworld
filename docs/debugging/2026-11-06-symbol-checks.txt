@@ -1,0 +1,39 @@
+8086 symbol and syntax checks
+Date: 2026-11-06 (Asia/Shanghai)
+Method: controlled variants of 01_hello_world/src/hello.asm
+Compiler: Open Watcom WASM, -0 (8086)
+
+[baseline]
+exit_code=0
+
+
+[nocomma]
+exit_code=1
+nocomma.asm(14): Error! E065: Operator is expected
+
+[widecomma]
+exit_code=1
+widecomma.asm(14): Error! E065: Operator is expected
+
+[badseg]
+exit_code=1
+badseg.asm(14): Error! E040: Invalid instruction operands
+
+[badquote]
+exit_code=1
+badquote.asm(10): Error! E032: Syntax error
+
+[pushimm]
+exit_code=1
+pushimm.asm(16): Error! E002: Invalid instruction with current CPU setting
+
+[nodollar]
+exit_code=0
+
+
+[DOS runtime baseline]
+output_hex=48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21 0d 0a
+[DOS runtime missing dollar terminator]
+output_hex=48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21 0d 0a 54 41 49 4c
+observed=Hello, World! followed by CR/LF and TAIL
+result=Missing terminator compiles, but DOS 09h continues into the adjacent marker.
